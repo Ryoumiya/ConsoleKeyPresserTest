@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsInput;
 
@@ -26,7 +20,6 @@ namespace ConsoleKeyPresserTest
             WindowsInput.Native.VirtualKeyCode.SPACE;
 
         private static readonly string replacementKey = "RControlKey";
-
 
         public static void Main()
         {
