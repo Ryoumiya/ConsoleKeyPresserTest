@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WindowsInput;
+using WindowsInput.Native;
 
 namespace ConsoleKeyPresserTest
 {
@@ -19,7 +20,7 @@ namespace ConsoleKeyPresserTest
         private static readonly WindowsInput.Native.VirtualKeyCode FakeKeyPress = 
             WindowsInput.Native.VirtualKeyCode.SPACE;
 
-        private static readonly string replacementKey = "RControlKey";
+        private static readonly string replacementKey = "LControlKey";
 
         public static void Main()
         {
@@ -46,6 +47,19 @@ namespace ConsoleKeyPresserTest
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
+        private static void FakePPTSplit()
+        {
+            SimulatedInput.Keyboard.KeyPress(VirtualKeyCode.MENU);
+            System.Threading.Thread.Sleep(100);
+            SimulatedInput.Keyboard.KeyPress(VirtualKeyCode.VK_J);
+            System.Threading.Thread.Sleep(100);
+            SimulatedInput.Keyboard.KeyPress(VirtualKeyCode.VK_L);
+            System.Threading.Thread.Sleep(100);
+            SimulatedInput.Keyboard.KeyPress(VirtualKeyCode.VK_M);
+            //System.Threading.Thread.Sleep(100);
+            //SimulatedInput.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+        }
+
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
@@ -55,7 +69,8 @@ namespace ConsoleKeyPresserTest
                 if (KeypresssName.Equals(replacementKey))
                 {
                     Console.WriteLine(replacementKey + " is Pressed...!");
-                    SimulatedInput.Keyboard.KeyPress(FakeKeyPress);
+                    //SimulatedInput.Keyboard.KeyPress(FakeKeyPress);
+                    FakePPTSplit();
                 }
                 //Console.WriteLine(KeypresssName);
                 //StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", true);
